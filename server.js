@@ -14,3 +14,5 @@ var server = app.listen(8080, function () {
 
 	console.log("Escuchando en el puerto:", port);
 });
+
+module.exports = app
