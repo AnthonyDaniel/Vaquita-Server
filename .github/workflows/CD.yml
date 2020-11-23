@@ -5,25 +5,19 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  build-and-publish:
-    name: build
+  build:
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
     steps:
-      - uses: actions/checkout@main
-      - name: npm install
-        with:
-          args: install
-      - name: npm lint
-        with:
-          args: run lint
-      - name: docker build
-        with:
-          args: build -t thony9799/vaquita .
-      - name: docker login
-        uses: actions/docker/login@master
-        env:
-          DOCKER_PASSWORD: ${{ secrets.USERNAME }}
-          DOCKER_USERNAME: ${{ secrets.PASSWORD }}
-      - name: docker push
-        with:
-          args: push thony9799/vaquita
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: docker build -t thony9799/vaquita .
