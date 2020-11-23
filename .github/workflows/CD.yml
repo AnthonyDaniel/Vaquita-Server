@@ -11,18 +11,23 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: npm install
+        uses: actions/npm@master
         with:
           args: install
       - name: npm lint
+        uses: actions/npm@master
         with:
           args: run lint
       - name: docker build
+        uses: actions/docker/cli@master
         with:
-          args: build -t thony9799/vaquita .
+          args: build -t thony9799/github-action .
       - name: docker login
+        uses: actions/docker/login@master
         env:
           DOCKER_PASSWORD: ${{ secrets.AMBthony1234 }}
           DOCKER_USERNAME: ${{ secrets.thony9799 }}
       - name: docker push
+        uses: actions/docker/cli@master
         with:
-          args: push thony9799/vaquita
+          args: push thony9799/github-action
