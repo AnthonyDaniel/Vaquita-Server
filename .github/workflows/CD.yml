@@ -21,12 +21,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: docker build -t thony9799/vaquita .
-    - name: docker login
-      uses: actions/docker/login@master
-      env:
-        DOCKER_PASSWORD: ${{ secrets.USERNAME }}
-        DOCKER_USERNAME: ${{ secrets.PASSWORD }}
-    - name: docker push
-      with:
-        args: push thony9799/vaquita
+    - run: docker push thony9799/vaquita
+
 
